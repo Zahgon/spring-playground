@@ -21,9 +21,7 @@ import example.todomvc.Todo;
 import example.todomvc.web.TemplateModel.TodoForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import java.util.Optional;
-
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,71 +40,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 class TurboTodoController {
 
-	private final TemplateModel template;
+    private final TemplateModel template;
 
-	@GetMapping
-	TurboStreams turboIndex(Model model, @RequestParam Optional<String> filter) {
+    @GetMapping
+    TurboStreams turboIndex(Model model, @RequestParam Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.prepareForm(model, filter);
+    /**
+     * An optimized variant of {@link #createTodo(TodoItemFormData)}. We explicitly bind to the
+     * {@value Hotwire.TURBO_STREAM_VALUE} media type to distinguish Hotwire requests. We then perform the normal insert
+     * and then return two {@link TurboStreams} for the parts of the page that need updates by rendering the corresponding
+     * fragments of the template.
+     *
+     * @param form
+     * @param model
+     * @return
+     */
+    @PostMapping
+    TurboStreams turboCreateTodo(@Valid @ModelAttribute("form") TodoForm form, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return new TurboStreams()
-				.replace("todos").withinTemplate("index")
-				.replace("foot").withinTemplate("index");
-	}
+    @PutMapping("/{todo}/toggle")
+    TurboStreams turboToggleCompletion(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * An optimized variant of {@link #createTodo(TodoItemFormData)}. We explicitly bind to the
-	 * {@value Hotwire.TURBO_STREAM_VALUE} media type to distinguish Hotwire requests. We then perform the normal insert
-	 * and then return two {@link TurboStreams} for the parts of the page that need updates by rendering the corresponding
-	 * fragments of the template.
-	 *
-	 * @param form
-	 * @param model
-	 * @return
-	 */
-	@PostMapping
-	TurboStreams turboCreateTodo(@Valid @ModelAttribute("form") TodoForm form,
-			@RequestParam Optional<String> filter, Model model) {
+    @DeleteMapping("/{todo}")
+    TurboStreams turboDeleteTodo(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.saveForm(form, model, filter);
-
-		return new TurboStreams()
-				.replace("new-todo").withinTemplate("index")
-				.append("todoItems").withFragment("fragments :: todo")
-				.replace("foot").withinTemplate("index");
-	}
-
-	@PutMapping("/{todo}/toggle")
-	TurboStreams turboToggleCompletion(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
-
-		todo = template.save(todo.toggleCompletion(), model, filter);
-
-		var todoId = "todo-" + todo.getId();
-		var streams = new TurboStreams();
-
-		return filter
-				.map(it -> it.equals("active")
-						? streams.remove(todoId)
-						: streams.replace(todoId).with("fragments :: todo"))
-				.orElse(streams)
-				.replace("foot").withinTemplate("index");
-	}
-
-	@DeleteMapping("/{todo}")
-	TurboStreams turboDeleteTodo(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
-
-		template.delete(todo, model, filter);
-
-		return new TurboStreams()
-				.remove("todo-" + todo.getId())
-				.replace("foot").withinTemplate("index");
-	}
-
-	@DeleteMapping("/completed")
-	TurboStreams turboDeleteCompletedTodos(@RequestParam Optional<String> filter, Model model) {
-
-		template.deleteCompletedTodos();
-
-		return turboIndex(model, filter);
-	}
+    @DeleteMapping("/completed")
+    TurboStreams turboDeleteCompletedTodos(@RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

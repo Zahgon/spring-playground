@@ -19,10 +19,8 @@ import example.todomvc.Todo;
 import example.todomvc.Todos;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.data.util.Streamable;
@@ -39,95 +37,74 @@ import org.springframework.ui.Model;
 @RequiredArgsConstructor
 class TemplateModel {
 
-	private static final Sort DEFAULT_SORT = TypedSort.sort(Todo.class).by(Todo::getCreated);
+    private static final Sort DEFAULT_SORT = TypedSort.sort(Todo.class).by(Todo::getCreated);
 
-	private final Todos todos;
+    private final Todos todos;
 
-	void prepareForm(Model model, Optional<String> filter) {
+    void prepareForm(Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		model.addAttribute("form", new TodoForm(""));
+    Todo save(TodoForm form) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		prepareTodos(model, filter);
-	}
+    Todo save(Todo todo) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	Todo save(TodoForm form) {
-		return todos.save(form.toEntity());
-	}
+    Todo save(Todo todo, Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	Todo save(Todo todo) {
-		return todos.save(todo);
-	}
+    void saveForm(TodoForm form, Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	Todo save(Todo todo, Model model, Optional<String> filter) {
-		var result = save(todo);
-		prepareReferenceData(todo, model, filter);
+    void delete(Todo todo) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return result;
-	}
+    void delete(Todo todo, Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	void saveForm(TodoForm form, Model model, Optional<String> filter) {
+    void deleteCompletedTodos() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		var todo = save(form);
+    void prepareTodos(Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		model.addAttribute("form", new TodoForm(""));
-		prepareReferenceData(todo, model, filter);
-	}
+    void prepareReferenceData(Todo todo, Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	void delete(Todo todo) {
-		todos.delete(todo);
-	}
+    void prepareReferenceData(Model model, Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	void delete(Todo todo, Model model, Optional<String> filter) {
+    private Streamable<Todo> todos(Optional<String> filter) {
+        // Needed due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=576093
+        var defaulted = filter.orElse("");
+        return switch(defaulted) {
+            case "active" ->
+                todos.findByCompleted(false, DEFAULT_SORT);
+            case "completed" ->
+                todos.findByCompleted(true, DEFAULT_SORT);
+            default ->
+                todos.findAll(DEFAULT_SORT);
+        };
+    }
 
-		delete(todo);
-		prepareReferenceData(model, filter);
-	}
+    public record TodoForm(@NotBlank String title) {
 
-	void deleteCompletedTodos() {
-		todos.findByCompleted(true, Sort.unsorted()).forEach(todos::delete);
-	}
+        Todo toEntity() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 
-	void prepareTodos(Model model, Optional<String> filter) {
-
-		model.addAttribute("todos", todos(filter)
-				.map(it -> new TodoDto(it.getId(), it.getTitle(), it.isCompleted())).toList());
-
-		prepareReferenceData(model, filter);
-	}
-
-	void prepareReferenceData(Todo todo, Model model, Optional<String> filter) {
-
-		model.addAttribute("todo", new TodoDto(todo.getId(), todo.getTitle(), todo.isCompleted()));
-
-		prepareReferenceData(model, filter);
-	}
-
-	void prepareReferenceData(Model model, Optional<String> filter) {
-
-		model.addAttribute("filter", filter.orElse(""));
-		model.addAttribute("numberOfIncomplete", todos.findByCompleted(false, DEFAULT_SORT).toList().size());
-		model.addAttribute("numberOfTodos", todos.findAll(DEFAULT_SORT).toList().size());
-	}
-
-	private Streamable<Todo> todos(Optional<String> filter) {
-
-		// Needed due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=576093
-		var defaulted = filter.orElse("");
-
-		return switch (defaulted) {
-			case "active" -> todos.findByCompleted(false, DEFAULT_SORT);
-			case "completed" -> todos.findByCompleted(true, DEFAULT_SORT);
-			default -> todos.findAll(DEFAULT_SORT);
-		};
-	}
-
-	public record TodoForm(@NotBlank String title) {
-
-		Todo toEntity() {
-			return new Todo(title);
-		}
-	}
-
-	public record TodoDto(UUID id, String title, boolean completed) {}
-
+    public record TodoDto(UUID id, String title, boolean completed) {
+    }
 }

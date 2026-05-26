@@ -16,10 +16,8 @@
 package de.odrotbohm.spring.web.autoconfigure;
 
 import static org.springframework.core.ResolvableType.*;
-
 import am.ik.yavi.core.Validator;
 import de.odrotbohm.spring.web.validation.YaviValidator;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -42,37 +40,8 @@ import org.springframework.core.ResolvableType;
 @ConditionalOnBean(Validator.class)
 class YaviValidatorAutoConfiguration {
 
-	@Bean
-	static BeanFactoryPostProcessor yaviValidatorRegisteringPostProcessor() {
-
-		return new BeanFactoryPostProcessor() {
-
-			/*
-			 * (non-Javadoc)
-			 * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor#postProcessBeanFactory(org.springframework.beans.factory.config.ConfigurableListableBeanFactory)
-			 */
-			@Override
-			@SuppressWarnings("unchecked")
-			public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-
-				if (!DefaultListableBeanFactory.class.isInstance(beanFactory)) {
-					return;
-				}
-
-				DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
-
-				for (String name : factory.getBeanNamesForType(Validator.class, false, false)) {
-
-					ResolvableType sourceType = beanFactory.getBeanDefinition(name).getResolvableType();
-
-					RootBeanDefinition definition = new RootBeanDefinition(YaviValidator.class,
-							() -> new YaviValidator<>(factory.getBean(name, Validator.class)));
-					definition.setTargetType(forClassWithGenerics(YaviValidator.class, sourceType.getGeneric(0)));
-					definition.setSource(this);
-
-					factory.registerBeanDefinition("__".concat(name), definition);
-				}
-			}
-		};
-	}
+    @Bean
+    static BeanFactoryPostProcessor yaviValidatorRegisteringPostProcessor() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

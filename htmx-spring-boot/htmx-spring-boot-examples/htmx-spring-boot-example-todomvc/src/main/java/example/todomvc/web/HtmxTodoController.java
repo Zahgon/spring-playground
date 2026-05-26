@@ -21,9 +21,7 @@ import example.todomvc.Todo;
 import example.todomvc.web.TemplateModel.TodoForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import java.util.Optional;
-
 import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,70 +37,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 class HtmxTodoController {
 
-	private final TemplateModel template;
+    private final TemplateModel template;
 
-	@GetMapping("/")
-	HtmxPartials htmxIndex(Model model, @RequestParam Optional<String> filter) {
+    @GetMapping("/")
+    HtmxPartials htmxIndex(Model model, @RequestParam Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.prepareForm(model, filter);
+    /**
+     * An optimized variant of {@link #createTodo(TodoItemFormData)}. We perform the normal insert and then return two
+     * {@link HtmxPartials} for the parts of the page that need updates by rendering the corresponding fragments of the
+     * template.
+     *
+     * @param form
+     * @param model
+     * @return
+     */
+    @PostMapping("/")
+    HtmxPartials htmxCreateTodo(@Valid @ModelAttribute("form") TodoForm form, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return new HtmxPartials()
-				.replace("todos").withinTemplate("index")
-				.replace("foot").withinTemplate("index");
-	}
+    @PutMapping("/{todo}/toggle")
+    HtmxPartials htmxToggleCompletion(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * An optimized variant of {@link #createTodo(TodoItemFormData)}. We perform the normal insert and then return two
-	 * {@link HtmxPartials} for the parts of the page that need updates by rendering the corresponding fragments of the
-	 * template.
-	 *
-	 * @param form
-	 * @param model
-	 * @return
-	 */
-	@PostMapping("/")
-	HtmxPartials htmxCreateTodo(@Valid @ModelAttribute("form") TodoForm form,
-			@RequestParam Optional<String> filter, Model model) {
+    @DeleteMapping("/{todo}")
+    HtmxPartials htmxDeleteTodo(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.saveForm(form, model, filter);
-
-		return new HtmxPartials()
-				.replace("new-todo").withinTemplate("index")
-				.append("todos").withFragment("fragments :: todo")
-				.replace("foot").withinTemplate("index");
-	}
-
-	@PutMapping("/{todo}/toggle")
-	HtmxPartials htmxToggleCompletion(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
-
-		todo = template.save(todo.toggleCompletion(), model, filter);
-
-		var todoId = "todo-" + todo.getId();
-		var streams = new HtmxPartials();
-
-		return filter
-				.map(it -> it.equals("active")
-						? streams.remove(todoId)
-						: streams.replace(todoId).with("fragments :: todo"))
-				.orElse(streams)
-				.replace("foot").withinTemplate("index");
-	}
-
-	@DeleteMapping("/{todo}")
-	HtmxPartials htmxDeleteTodo(@PathVariable Todo todo, @RequestParam Optional<String> filter, Model model) {
-
-		template.delete(todo, model, filter);
-
-		return new HtmxPartials()
-				.remove("todo-" + todo.getId())
-				.replace("foot").withinTemplate("index");
-	}
-
-	@DeleteMapping("/completed")
-	HtmxPartials htmxDeleteCompletedTodos(@RequestParam Optional<String> filter, Model model) {
-
-		template.deleteCompletedTodos();
-
-		return htmxIndex(model, filter);
-	}
+    @DeleteMapping("/completed")
+    HtmxPartials htmxDeleteCompletedTodos(@RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

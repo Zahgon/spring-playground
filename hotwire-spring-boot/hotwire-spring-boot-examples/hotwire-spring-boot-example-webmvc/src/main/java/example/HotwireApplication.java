@@ -26,7 +26,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class HotwireApplication {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(HotwireApplication.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

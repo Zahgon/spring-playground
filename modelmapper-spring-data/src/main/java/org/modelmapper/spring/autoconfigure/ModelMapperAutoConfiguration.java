@@ -16,7 +16,6 @@
 package org.modelmapper.spring.autoconfigure;
 
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.Module;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -30,12 +29,8 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnMissingBean(ModelMapper.class)
 class ModelMapperAutoConfiguration {
 
-	@Bean
-	ModelMapper modelMapper(List<Module> modules) {
-
-		ModelMapper mapper = new ModelMapper();
-		modules.forEach(mapper::registerModule);
-
-		return mapper;
-	}
+    @Bean
+    ModelMapper modelMapper(List<Module> modules) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

@@ -20,14 +20,11 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ser.std.StdSerializer;
-
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 
 /**
@@ -38,40 +35,36 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
  */
 public class ErrorsSerializer extends StdSerializer<Errors> {
 
-	ErrorsSerializer() {
-		super(Errors.class);
-	}
+    ErrorsSerializer() {
+        super(Errors.class);
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see tools.jackson.databind.ser.std.StdSerializer#serialize(java.lang.Object, tools.jackson.core.JsonGenerator, tools.jackson.databind.SerializationContext)
 	 */
-	@Override
-	public void serialize(Errors value, JsonGenerator gen, SerializationContext context) throws JacksonException {
+    @Override
+    public void serialize(Errors value, JsonGenerator gen, SerializationContext context) throws JacksonException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		context.findValueSerializer(ErrorsJson.class)
-				.serialize(new ErrorsJson(value), gen, context);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see tools.jackson.databind.ValueSerializer#isEmpty(tools.jackson.databind.SerializationContext, java.lang.Object)
 	 */
-	@Override
-	public boolean isEmpty(SerializationContext ctxt, Errors value) {
-		return value.getFieldErrors().isEmpty();
-	}
+    @Override
+    public boolean isEmpty(SerializationContext ctxt, Errors value) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	@RequiredArgsConstructor
-	static class ErrorsJson {
+    @RequiredArgsConstructor
+    static class ErrorsJson {
 
-		private final Errors errors;
+        private final Errors errors;
 
-		@JsonAnyGetter
-		Map<String, Object> toMap() {
-
-			return errors.getFieldErrors().stream()
-					.collect(Collectors.toMap(FieldError::getField, Function.identity(), (l, r) -> r));
-		}
-	}
+        @JsonAnyGetter
+        Map<String, Object> toMap() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 }

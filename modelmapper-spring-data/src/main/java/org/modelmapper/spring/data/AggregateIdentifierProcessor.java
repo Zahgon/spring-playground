@@ -17,7 +17,6 @@ package org.modelmapper.spring.data;
 
 import java.util.Collection;
 import java.util.Collections;
-
 import org.springframework.plugin.core.Plugin;
 
 /**
@@ -29,39 +28,39 @@ import org.springframework.plugin.core.Plugin;
  */
 public interface AggregateIdentifierProcessor extends Plugin<Class<?>> {
 
-	/**
-	 * Pre-process the identifier obtained from the source object to finally resolve an aggregate from the returned value.
-	 *
-	 * @param identifier the original identifier obtained from the source object. Must not be {@literal null}.
-	 * @param targetType the target aggregate type the given identifier is supposed to eventually identify. Must not be
-	 *          {@literal null}.
-	 * @return will never be {@literal null}.
-	 */
-	default Object preProcessIdentifier(Object identifier, Class<?> targetType) {
-		return identifier;
-	}
+    /**
+     * Pre-process the identifier obtained from the source object to finally resolve an aggregate from the returned value.
+     *
+     * @param identifier the original identifier obtained from the source object. Must not be {@literal null}.
+     * @param targetType the target aggregate type the given identifier is supposed to eventually identify. Must not be
+     *          {@literal null}.
+     * @return will never be {@literal null}.
+     */
+    default Object preProcessIdentifier(Object identifier, Class<?> targetType) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Post process the identifier obtained from the aggregate to finally constitute the value to be set on the target
-	 * object.
-	 *
-	 * @param identifier the original identifier of the aggregate to be transformed into the target object's property
-	 *          value. Must not be {@literal null}.
-	 * @param sourceType the source aggregate type. Must not be {@literal null}.
-	 * @param targetType the target type to create for this aggregate. Can be used to decide whether to actually apply
-	 *          post-processing.
-	 * @return will never be {@literal null}.
-	 */
-	default Object postProcessIdentifier(Object identifier, Class<?> sourceType, Class<?> targetType) {
-		return identifier;
-	}
+    /**
+     * Post process the identifier obtained from the aggregate to finally constitute the value to be set on the target
+     * object.
+     *
+     * @param identifier the original identifier of the aggregate to be transformed into the target object's property
+     *          value. Must not be {@literal null}.
+     * @param sourceType the source aggregate type. Must not be {@literal null}.
+     * @param targetType the target type to create for this aggregate. Can be used to decide whether to actually apply
+     *          post-processing.
+     * @return will never be {@literal null}.
+     */
+    default Object postProcessIdentifier(Object identifier, Class<?> sourceType, Class<?> targetType) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Returns additional identifier types that the processor will be able to handle.
-	 *
-	 * @return will never be {@literal null}.
-	 */
-	default Collection<Class<?>> getAdditionalIdentifierTypes() {
-		return Collections.emptyList();
-	}
+    /**
+     * Returns additional identifier types that the processor will be able to handle.
+     *
+     * @return will never be {@literal null}.
+     */
+    default Collection<Class<?>> getAdditionalIdentifierTypes() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

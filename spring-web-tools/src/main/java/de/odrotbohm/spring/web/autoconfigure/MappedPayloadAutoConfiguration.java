@@ -18,9 +18,7 @@ package de.odrotbohm.spring.web.autoconfigure;
 import de.odrotbohm.spring.web.mvc.MappedPayloadHandlerMethodArgumentResolver;
 import de.odrotbohm.spring.web.mvc.MappedPayloadProperties;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -36,15 +34,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @EnableConfigurationProperties(MappedPayloadProperties.class)
 class MappedPayloadAutoConfiguration implements WebMvcConfigurer {
 
-	private final ObjectFactory<RequestMappingHandlerAdapter> adapter;
-	private final MappedPayloadProperties configuration;
+    private final ObjectFactory<RequestMappingHandlerAdapter> adapter;
 
-	/*
+    private final MappedPayloadProperties configuration;
+
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addArgumentResolvers(java.util.List)
 	 */
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(new MappedPayloadHandlerMethodArgumentResolver(() -> adapter.getObject(), configuration));
-	}
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

@@ -18,13 +18,11 @@ package de.odrotbohm.spring.hotwire.webmvc;
 import de.odrotbohm.spring.hotwire.webmvc.TurboStreams.TurboStream;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
@@ -43,83 +41,36 @@ import org.thymeleaf.templatemode.TemplateMode;
 @RequiredArgsConstructor
 public class WebMvcHotwire implements Hotwire {
 
-	private final @NonNull ThymeleafViewResolver views;
-	private final @NonNull SpringTemplateEngine engine;
-	private final @NonNull LocaleResolver locales;
+    @NonNull
+    private final ThymeleafViewResolver views;
 
-	/*
+    @NonNull
+    private final SpringTemplateEngine engine;
+
+    @NonNull
+    private final LocaleResolver locales;
+
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.boot.hotwire.webmvc.WebMvcHotwire#stream()
 	 */
-	public TurboStreams stream() {
-		return new TurboStreams();
-	}
+    public TurboStreams stream() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.boot.hotwire.webmvc.WebMvcHotwire#toView(org.springframework.boot.hotwire.webmvc.TurboStreams)
 	 */
-	public View toView(TurboStreams streams) {
+    public View toView(TurboStreams streams) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		Assert.notNull(streams, "TurboStreams must not be null!");
-
-		return (model, request, response) -> {
-
-			Locale locale = locales.resolveLocale(request);
-			PrintWriter writer = response.getWriter();
-
-			for (TurboStream it : streams.toIterable()) {
-
-				writer.write(it.openStream());
-
-				if (!it.isRemove()) {
-
-					writer.write(it.openTemplateFormatted());
-
-					ThymeleafView delegate = (ThymeleafView) views.resolveViewName(it.getTemplate(), locale);
-					delegate.setContentType(Hotwire.TURBO_STREAM_VALUE);
-					delegate.render(model, request, response);
-
-					writer.write(it.closeTemplateFormatted());
-				}
-
-				writer.write(it.closeStream());
-			}
-		};
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.boot.hotwire.webmvc.WebMvcHotwire#toSsePayload(org.springframework.boot.hotwire.webmvc.TurboStreams, java.util.Map)
 	 */
-	public String toSsePayload(TurboStreams streams, Map<String, Object> model) {
-
-		Assert.notNull(streams, "TurboStreams must not be null!");
-		Assert.notNull(model, "Model must not be null!");
-
-		StringBuilder builder = new StringBuilder();
-
-		for (TurboStream it : streams.toIterable()) {
-
-			builder.append(it.openStream());
-
-			if (!it.isRemove()) {
-
-				Context context = new Context();
-				context.setVariables(model);
-
-				String[] parts = it.getTemplate().split("::");
-				Set<String> fragments = parts.length > 1 ? Collections.singleton(parts[1].trim()) : Collections.emptySet();
-				TemplateSpec spec = new TemplateSpec(parts[0].trim(), fragments, TemplateMode.HTML, null);
-
-				builder.append(it.openTemplate());
-				builder.append(engine.process(spec, context).replaceAll("\n", ""));
-				builder.append(it.closeTemplate());
-			}
-
-			builder.append(it.closeStream());
-		}
-
-		return builder.toString();
-	}
+    public String toSsePayload(TurboStreams streams, Map<String, Object> model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

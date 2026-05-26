@@ -16,9 +16,7 @@
 package org.modelmapper.spring.data;
 
 import lombok.Getter;
-
 import java.util.*;
-
 import org.modelmapper.Converter;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
@@ -44,260 +42,136 @@ import org.springframework.util.Assert;
  */
 public class AggregateMappingModule implements org.modelmapper.Module {
 
-	private final RepositoryInvokerFactory invokerFactory;
-	private final Repositories repositories;
-	private final ConversionService conversions;
+    private final RepositoryInvokerFactory invokerFactory;
 
-	private final List<AggregateIdentifierProcessor> processors;
-	private final List<Class<?>> exclusions;
-	private final Map<Class<?>, NullHandling> nullHandling;
-	private NullHandling defaultNullHandling;
+    private final Repositories repositories;
 
-	/**
-	 * Creates a new {@link AggregateMappingModule} from the given {@link Repositories} and {@link ConversionService}.
-	 *
-	 * @param repositories must not be {@literal null}.
-	 * @param conversions must not be {@literal null}.
-	 */
-	public AggregateMappingModule(Repositories repositories, ConversionService conversions) {
+    private final ConversionService conversions;
 
-		Assert.notNull(repositories, "Repositories must not be null!");
-		Assert.notNull(conversions, "ConversionService must not be null!");
+    private final List<AggregateIdentifierProcessor> processors;
 
-		this.invokerFactory = new DefaultRepositoryInvokerFactory(repositories);
-		this.repositories = repositories;
-		this.conversions = conversions;
-		this.processors = new ArrayList<>();
-		this.exclusions = new ArrayList<>();
-		this.nullHandling = new HashMap<>();
-		this.defaultNullHandling = NullHandling.THROW_EXCEPTION;
-	}
+    private final List<Class<?>> exclusions;
 
-	/**
-	 * Registers an {@link IdentifierProcessor} to be used to pre- and post-process identifiers during conversions.
-	 *
-	 * @param processor must not be {@literal null}.
-	 * @return
-	 */
-	public AggregateMappingModule register(AggregateIdentifierProcessor processor) {
+    private final Map<Class<?>, NullHandling> nullHandling;
 
-		Assert.notNull(processor, "IdentifierProcessor must not be null!");
+    private NullHandling defaultNullHandling;
 
-		this.processors.add(processor);
+    /**
+     * Creates a new {@link AggregateMappingModule} from the given {@link Repositories} and {@link ConversionService}.
+     *
+     * @param repositories must not be {@literal null}.
+     * @param conversions must not be {@literal null}.
+     */
+    public AggregateMappingModule(Repositories repositories, ConversionService conversions) {
+        Assert.notNull(repositories, "Repositories must not be null!");
+        Assert.notNull(conversions, "ConversionService must not be null!");
+        this.invokerFactory = new DefaultRepositoryInvokerFactory(repositories);
+        this.repositories = repositories;
+        this.conversions = conversions;
+        this.processors = new ArrayList<>();
+        this.exclusions = new ArrayList<>();
+        this.nullHandling = new HashMap<>();
+        this.defaultNullHandling = NullHandling.THROW_EXCEPTION;
+    }
 
-		return this;
-	}
+    /**
+     * Registers an {@link IdentifierProcessor} to be used to pre- and post-process identifiers during conversions.
+     *
+     * @param processor must not be {@literal null}.
+     * @return
+     */
+    public AggregateMappingModule register(AggregateIdentifierProcessor processor) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Excludes the given domain type from the aggregate resolution mapping.
-	 *
-	 * @param type must not be {@literal null}.
-	 * @return
-	 */
-	public AggregateMappingModule exclude(Class<?> type) {
+    /**
+     * Excludes the given domain type from the aggregate resolution mapping.
+     *
+     * @param type must not be {@literal null}.
+     * @return
+     */
+    public AggregateMappingModule exclude(Class<?> type) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		Assert.notNull(type, "Type must not be null!");
+    /**
+     * Registers a dedicated {@link NullHandling} for the given type. For all other types the default {@link NullHandling}
+     * will be used.
+     *
+     * @param type must not be {@literal null}.
+     * @param nullHandling must not be {@literal null}.
+     * @return will never be {@literal null}.
+     * @see #defaultNullHandling(NullHandling)
+     */
+    public AggregateMappingModule nullHandling(Class<?> type, NullHandling nullHandling) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		this.exclusions.add(type);
+    /**
+     * Registers the given {@link NullHandling} as the one to be applied by default. Defaults to
+     * {@link NullHandling#THROW_EXCEPTION}.
+     *
+     * @param nullHandling must not be {@literal null}.
+     * @return will never be {@literal null}.
+     */
+    public AggregateMappingModule defaultNullHandling(NullHandling nullHandling) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return this;
-	}
-
-	/**
-	 * Registers a dedicated {@link NullHandling} for the given type. For all other types the default {@link NullHandling}
-	 * will be used.
-	 *
-	 * @param type must not be {@literal null}.
-	 * @param nullHandling must not be {@literal null}.
-	 * @return will never be {@literal null}.
-	 * @see #defaultNullHandling(NullHandling)
-	 */
-	public AggregateMappingModule nullHandling(Class<?> type, NullHandling nullHandling) {
-
-		Assert.notNull(type, "Type must not be null!");
-		Assert.notNull(nullHandling, "NullHandling must not be null!");
-
-		this.nullHandling.put(type, nullHandling);
-
-		return this;
-	}
-
-	/**
-	 * Registers the given {@link NullHandling} as the one to be applied by default. Defaults to
-	 * {@link NullHandling#THROW_EXCEPTION}.
-	 *
-	 * @param nullHandling must not be {@literal null}.
-	 * @return will never be {@literal null}.
-	 */
-	public AggregateMappingModule defaultNullHandling(NullHandling nullHandling) {
-
-		Assert.notNull(nullHandling, "Null handling must not be null!");
-
-		this.defaultNullHandling = nullHandling;
-
-		return this;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.modelmapper.Module#setupModule(org.modelmapper.ModelMapper)
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setupModule(ModelMapper mapper) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setupModule(ModelMapper mapper) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		PluginRegistry<AggregateIdentifierProcessor, Class<?>> registry = PluginRegistry.of(processors);
+    /**
+     * A {@link MappingException} being thrown in case no aggregate can be resolved for a given source value.
+     *
+     * @author Oliver Drotbohm
+     */
+    @Getter
+    public static class AggregateReferenceMappingException extends MappingException {
 
-		@SuppressWarnings("rawtypes")
-		Converter converter = new Converter<Object, Object>() {
+        private static final long serialVersionUID = 2554385939537893357L;
 
-			@Override
-			@Nullable
-			public Object convert(MappingContext<Object, Object> context) {
+        private final String path;
 
-				Class<?> destinationType = context.getDestinationType();
-				PersistentEntity<?, ?> information = repositories.getPersistentEntity(destinationType);
-				Object source = context.getSource();
+        private final Object source;
 
-				if (source == null) {
-					return handleNull(null, context);
-				}
+        private final Class<?> targetType;
 
-				// Pre-process source identifier
-				Object identifier = registry.getPluginFor(destinationType)
-						.map(it -> it.preProcessIdentifier(source, destinationType))
-						.orElse(source);
+        private final String message;
 
-				// Convert into domain identifier
-				Object domainId = Arrays.asList(UUID.class, String.class).contains(identifier.getClass())
-						? conversions.convert(identifier, information.getRequiredIdProperty().getType())
-						: source;
+        public AggregateReferenceMappingException(String path, @Nullable Object source, Class<?> targetType) {
+            super(Arrays.asList(new ErrorMessage(message(targetType, source))));
+            this.path = cleanUp(path);
+            this.source = source;
+            this.targetType = targetType;
+            this.message = message(targetType, source);
+        }
 
-				// Translate into aggregate instance
-				RepositoryInvoker invoker = invokerFactory.getInvokerFor(destinationType);
+        private static String message(Class<?> targetType, @Nullable Object source) {
+            return String.format("Invalid %s reference %s!", targetType.getName(), source);
+        }
 
-				Object result = Optional.ofNullable(domainId)
-						.flatMap(it -> invoker.invokeFindById(it))
-						.orElse(null);
+        private static String cleanUp(String path) {
+            return !path.contains(".") ? path : path.substring(0, path.indexOf('.'));
+        }
+    }
 
-				return result == null ? handleNull(domainId, context) : result;
-			}
+    public enum NullHandling {
 
-			@Nullable
-			private Object handleNull(@Nullable Object id, MappingContext<?, ?> context) {
-
-				Class<?> destinationType = context.getDestinationType();
-				NullHandling handling = Optional.ofNullable(nullHandling.get(destinationType)).orElse(defaultNullHandling);
-
-				if (handling.equals(NullHandling.THROW_EXCEPTION)) {
-
-					Class<?> type = context.getParent().getSourceType();
-
-					boolean isCollection = Collection.class.isAssignableFrom(type);
-					MappingContext<?, ?> mappingContext = isCollection ? context.getParent() : context;
-					Mapping mapping = mappingContext.getMapping();
-
-					throw new AggregateReferenceMappingException(mapping.getPath(), id, destinationType);
-				}
-
-				return null;
-			}
-		};
-
-		@SuppressWarnings("rawtypes")
-		Converter toStringOrUuidConverter = new Converter<Object, Object>() {
-
-			@Override
-			@Nullable
-			public Object convert(MappingContext<Object, Object> context) {
-
-				Object source = context.getSource();
-				Class<?> sourceType = context.getSourceType();
-				Class<?> targetType = context.getDestinationType();
-
-				Object id = repositories.getPersistentEntity(source.getClass())
-						.getIdentifierAccessor(source)
-						.getRequiredIdentifier();
-
-				Object processed = registry.getPluginFor(sourceType)
-						.map(it -> it.postProcessIdentifier(id, sourceType, targetType))
-						.orElse(id);
-
-				return targetType.isInstance(processed)
-						? processed
-						: conversions.convert(processed, targetType);
-			}
-		};
-
-		repositories.forEach(type -> {
-
-			if (exclusions.stream().anyMatch(type::isAssignableFrom)) {
-				return;
-			}
-
-			PersistentEntity<?, ?> information = repositories.getPersistentEntity(type);
-			Class<?> domainIdType = information.getRequiredIdProperty().getType();
-			Set<Class<?>> idTypes = new HashSet<Class<?>>();
-
-			idTypes.addAll(Arrays.asList(UUID.class, String.class));
-			idTypes.add(domainIdType);
-
-			registry.getPluginFor(type)
-					.map(AggregateIdentifierProcessor::getAdditionalIdentifierTypes)
-					.ifPresent(idTypes::addAll);
-
-			idTypes.forEach(it -> {
-
-				mapper.addConverter(converter, it, information.getType());
-				mapper.addConverter(toStringOrUuidConverter, information.getType(), it);
-			});
-		});
-	}
-
-	/**
-	 * A {@link MappingException} being thrown in case no aggregate can be resolved for a given source value.
-	 *
-	 * @author Oliver Drotbohm
-	 */
-	@Getter
-	public static class AggregateReferenceMappingException extends MappingException {
-
-		private static final long serialVersionUID = 2554385939537893357L;
-
-		private final String path;
-		private final Object source;
-		private final Class<?> targetType;
-		private final String message;
-
-		public AggregateReferenceMappingException(String path, @Nullable Object source, Class<?> targetType) {
-
-			super(Arrays.asList(new ErrorMessage(message(targetType, source))));
-
-			this.path = cleanUp(path);
-			this.source = source;
-			this.targetType = targetType;
-			this.message = message(targetType, source);
-		}
-
-		private static String message(Class<?> targetType, @Nullable Object source) {
-			return String.format("Invalid %s reference %s!", targetType.getName(), source);
-		}
-
-		private static String cleanUp(String path) {
-			return !path.contains(".") ? path : path.substring(0, path.indexOf('.'));
-		}
-	}
-
-	public enum NullHandling {
-
-		/**
-		 * Failed aggregate lookups result in {@literal null} being used instead.
-		 */
-		RETURN_NULL,
-
-		/**
-		 * Failed aggregate lookups cause an {@link AggregateReferenceMappingException} be registered.
-		 */
-		THROW_EXCEPTION;
-	}
+        /**
+         * Failed aggregate lookups result in {@literal null} being used instead.
+         */
+        RETURN_NULL,
+        /**
+         * Failed aggregate lookups cause an {@link AggregateReferenceMappingException} be registered.
+         */
+        THROW_EXCEPTION
+    }
 }

@@ -18,13 +18,11 @@ package de.odrotbohm.spring.htmx.webmvc;
 import de.odrotbohm.spring.htmx.webmvc.HtmxPartials.Partial;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
@@ -42,75 +40,36 @@ import org.thymeleaf.templatemode.TemplateMode;
 @RequiredArgsConstructor
 public class WebMvcHtmx implements Htmx {
 
-	private final @NonNull ViewResolver views;
-	private final @NonNull SpringTemplateEngine engine;
-	private final @NonNull LocaleResolver locales;
+    @NonNull
+    private final ViewResolver views;
 
-	/*
+    @NonNull
+    private final SpringTemplateEngine engine;
+
+    @NonNull
+    private final LocaleResolver locales;
+
+    /*
 	 * (non-Javadoc)
 	 * @see de.odrotbohm.spring.htmx.webmvc.Htmx#stream()
 	 */
-	public HtmxPartials stream() {
-		return new HtmxPartials();
-	}
+    public HtmxPartials stream() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see de.odrotbohm.spring.htmx.webmvc.Htmx#toView(de.odrotbohm.spring.htmx.webmvc.HtmxPartials)
 	 */
-	public View toView(HtmxPartials streams) {
+    public View toView(HtmxPartials streams) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		Assert.notNull(streams, "TurboStreams must not be null!");
-
-		return (model, request, response) -> {
-
-			Locale locale = locales.resolveLocale(request);
-			PrintWriter writer = response.getWriter();
-
-			for (Partial it : streams.toIterable()) {
-
-				writer.write(it.openWrapper());
-
-				if (!it.isRemove()) {
-					views.resolveViewName(it.getTemplate(), locale)
-							.render(model, request, response);
-				}
-
-				writer.write(it.closeWrapper());
-			}
-		};
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see de.odrotbohm.spring.htmx.webmvc.Htmx#toSsePayload(de.odrotbohm.spring.htmx.webmvc.HtmxPartials, java.util.Map)
 	 */
-	public String toSsePayload(HtmxPartials streams, Map<String, Object> model) {
-
-		Assert.notNull(streams, "TurboStreams must not be null!");
-		Assert.notNull(model, "Model must not be null!");
-
-		StringBuilder builder = new StringBuilder();
-
-		for (Partial it : streams.toIterable()) {
-
-			builder.append(it.openWrapper());
-
-			if (!it.isRemove()) {
-
-				Context context = new Context();
-				context.setVariables(model);
-
-				String[] parts = it.getTemplate().split("::");
-				Set<String> fragments = parts.length > 1 ? Collections.singleton(parts[1].trim()) : Collections.emptySet();
-				TemplateSpec spec = new TemplateSpec(parts[0].trim(), fragments, TemplateMode.HTML, null);
-
-				builder.append(engine.process(spec, context).replaceAll("\n", ""));
-			}
-
-			builder.append(it.closeWrapper());
-		}
-
-		return builder.toString();
-	}
+    public String toSsePayload(HtmxPartials streams, Map<String, Object> model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

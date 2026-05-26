@@ -17,11 +17,9 @@ package example;
 
 import de.odrotbohm.spring.hotwire.webmvc.Hotwire;
 import de.odrotbohm.spring.hotwire.webmvc.TurboStreams;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,39 +32,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 class TurboStreamsController {
 
-	private final List<Long> times = new ArrayList<>();
+    private final List<Long> times = new ArrayList<>();
 
-	@GetMapping(path = "/")
-	String index(Model model) {
+    @GetMapping(path = "/")
+    String index(Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		model.addAttribute("times", times);
+    @PostMapping(path = "/", produces = MediaType.TEXT_HTML_VALUE)
+    String indexStreamFull(Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return "index";
-	}
+    @PostMapping(path = "/", produces = Hotwire.TURBO_STREAM_VALUE)
+    TurboStreams indexStream(Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	@PostMapping(path = "/", produces = MediaType.TEXT_HTML_VALUE)
-	String indexStreamFull(Model model) {
-
-		now();
-
-		model.addAttribute("times", times);
-
-		return "index";
-	}
-
-	@PostMapping(path = "/", produces = Hotwire.TURBO_STREAM_VALUE)
-	TurboStreams indexStream(Model model) {
-
-		model.addAttribute("times", Arrays.asList(now()));
-
-		return new TurboStreams()
-				.append("pings").with("index :: ping");
-	}
-
-	private long now() {
-
-		times.add(System.currentTimeMillis());
-
-		return times.get(times.size() - 1);
-	}
+    private long now() {
+        times.add(System.currentTimeMillis());
+        return times.get(times.size() - 1);
+    }
 }

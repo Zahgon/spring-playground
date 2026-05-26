@@ -16,7 +16,6 @@
 package de.odrotbohm.spring.web.autoconfigure;
 
 import de.odrotbohm.spring.web.jackson.ErrorsModule;
-
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +26,8 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 class ErrorsModuleAutoConfiguration {
 
-	@Bean
-	ErrorsModule jacksonErrorsModule(MessageSource messageSource) {
-		return new ErrorsModule(messageSource);
-	}
+    @Bean
+    ErrorsModule jacksonErrorsModule(MessageSource messageSource) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

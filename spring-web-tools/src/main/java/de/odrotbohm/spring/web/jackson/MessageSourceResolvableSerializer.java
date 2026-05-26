@@ -19,7 +19,6 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ser.std.StdSerializer;
-
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -31,28 +30,24 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 class MessageSourceResolvableSerializer extends StdSerializer<MessageSourceResolvable> {
 
-	private final MessageSourceAccessor accessor;
+    private final MessageSourceAccessor accessor;
 
-	/**
-	 * Creates a new {@link MessageSourceResolvableSerializer} for the given {@link MessageSourceAccessor}.
-	 *
-	 * @param accessor must not be {@literal null}.
-	 */
-	public MessageSourceResolvableSerializer(MessageSourceAccessor accessor) {
+    /**
+     * Creates a new {@link MessageSourceResolvableSerializer} for the given {@link MessageSourceAccessor}.
+     *
+     * @param accessor must not be {@literal null}.
+     */
+    public MessageSourceResolvableSerializer(MessageSourceAccessor accessor) {
+        super(MessageSourceResolvable.class);
+        this.accessor = accessor;
+    }
 
-		super(MessageSourceResolvable.class);
-
-		this.accessor = accessor;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see tools.jackson.databind.ser.std.StdSerializer#serialize(java.lang.Object, tools.jackson.core.JsonGenerator, tools.jackson.databind.SerializationContext)
 	 */
-	@Override
-	public void serialize(MessageSourceResolvable value, JsonGenerator gen, SerializationContext provider)
-			throws JacksonException {
-
-		gen.writeString(accessor.getMessage(value));
-	}
+    @Override
+    public void serialize(MessageSourceResolvable value, JsonGenerator gen, SerializationContext provider) throws JacksonException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

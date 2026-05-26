@@ -2,44 +2,43 @@ package example.todomvc;
 
 import java.time.Instant;
 import java.util.UUID;
-
 import org.springframework.data.annotation.Id;
 
 public class Todo {
 
-	private @Id UUID id;
-	private String title;
-	private boolean completed;
-	private Instant created;
+    @Id
+    private UUID id;
 
-	public Todo(String title) {
+    private String title;
 
-		this.id = UUID.randomUUID();
-		this.title = title;
-		this.completed = false;
-		this.created = Instant.now();
-	}
+    private boolean completed;
 
-	public UUID getId() {
-		return id;
-	}
+    private Instant created;
 
-	public String getTitle() {
-		return title;
-	}
+    public Todo(String title) {
+        this.id = UUID.randomUUID();
+        this.title = title;
+        this.completed = false;
+        this.created = Instant.now();
+    }
 
-	public boolean isCompleted() {
-		return completed;
-	}
+    public UUID getId() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public Instant getCreated() {
-		return created;
-	}
+    public String getTitle() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public Todo toggleCompletion() {
+    public boolean isCompleted() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		this.completed = !completed;
+    public Instant getCreated() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return this;
-	}
+    public Todo toggleCompletion() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

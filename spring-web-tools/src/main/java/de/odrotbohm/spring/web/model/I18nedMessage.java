@@ -19,10 +19,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
-
 import java.util.Arrays;
 import java.util.stream.Stream;
-
 import org.jspecify.annotations.Nullable;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.util.Assert;
@@ -39,35 +37,43 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class I18nedMessage implements MessageSourceResolvable {
 
-	@With @Nullable @Getter //
-	private final String[] codes;
+    //
+    @With
+    //
+    @Nullable
+    //
+    @Getter
+    private final String[] codes;
 
-	@Nullable @Getter //
-	private final Object[] arguments;
+    //
+    @Nullable
+    //
+    @Getter
+    private final Object[] arguments;
 
-	/**
-	 * This text is used if the codes can't resolved.
-	 */
-	@With @Nullable @Getter //
-	private final String defaultMessage;
+    /**
+     * This text is used if the codes can't resolved.
+     */
+    //
+    @With
+    //
+    @Nullable
+    //
+    @Getter
+    private final String defaultMessage;
 
-	/**
-	 * Creates a new {@link I18nedMessage} for the given codes.
-	 *
-	 * @param code the primary code to resolve.
-	 * @param additionalCodes additional codes to be used for lookup.
-	 * @return will never be {@literal null}.
-	 */
-	public static I18nedMessage of(String code, String... additionalCodes) {
+    /**
+     * Creates a new {@link I18nedMessage} for the given codes.
+     *
+     * @param code the primary code to resolve.
+     * @param additionalCodes additional codes to be used for lookup.
+     * @return will never be {@literal null}.
+     */
+    public static I18nedMessage of(String code, String... additionalCodes) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		Assert.hasText(code, "Code must not be null or empty!");
-
-		String[] codes = Stream.concat(Stream.of(code), Arrays.stream(additionalCodes)).toArray(String[]::new);
-
-		return new I18nedMessage(codes, new Object[0], null);
-	}
-
-	public I18nedMessage withArguments(Object... arguments) {
-		return new I18nedMessage(codes, arguments, defaultMessage);
-	}
+    public I18nedMessage withArguments(Object... arguments) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

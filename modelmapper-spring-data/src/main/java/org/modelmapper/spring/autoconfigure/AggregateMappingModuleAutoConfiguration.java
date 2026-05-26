@@ -16,7 +16,6 @@
 package org.modelmapper.spring.autoconfigure;
 
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spring.data.AggregateIdentifierProcessor;
 import org.modelmapper.spring.data.AggregateMappingConfigurer;
@@ -38,19 +37,9 @@ import org.springframework.data.repository.support.Repositories;
 @AutoConfigureBefore(ModelMapperAutoConfiguration.class)
 class AggregateMappingModuleAutoConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	AggregateMappingModule repositoryMappingModule(ApplicationContext context,
-			ObjectProvider<ConversionService> conversionService,
-			List<AggregateIdentifierProcessor> processors, List<AggregateMappingConfigurer> configurers) {
-
-		Repositories repositories = new Repositories(context);
-		AggregateMappingModule module = new AggregateMappingModule(repositories,
-				conversionService.getIfUnique(() -> context.getBean("mvcConversionService", ConversionService.class)));
-
-		processors.forEach(module::register);
-		configurers.forEach(it -> it.configure(module));
-
-		return module;
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    AggregateMappingModule repositoryMappingModule(ApplicationContext context, ObjectProvider<ConversionService> conversionService, List<AggregateIdentifierProcessor> processors, List<AggregateMappingConfigurer> configurers) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

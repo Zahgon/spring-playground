@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(headers = "HX-Request=true")
 class HtmxController {
 
-	@GetMapping("/foo")
-	String foo() {
-		return "index";
-	}
+    @GetMapping("/foo")
+    String foo() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

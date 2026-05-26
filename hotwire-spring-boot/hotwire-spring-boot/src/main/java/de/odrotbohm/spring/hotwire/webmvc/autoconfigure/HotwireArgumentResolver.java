@@ -19,7 +19,6 @@ import de.odrotbohm.spring.hotwire.webmvc.Hotwire;
 import de.odrotbohm.spring.hotwire.webmvc.WebMvcHotwire;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -35,26 +34,30 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @RequiredArgsConstructor
 class HotwireArgumentResolver implements HandlerMethodArgumentResolver {
 
-	private final @NonNull ThymeleafViewResolver views;
-	private final @NonNull SpringTemplateEngine engine;
-	private final @NonNull LocaleResolver locales;
+    @NonNull
+    private final ThymeleafViewResolver views;
 
-	/*
+    @NonNull
+    private final SpringTemplateEngine engine;
+
+    @NonNull
+    private final LocaleResolver locales;
+
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.method.support.HandlerMethodArgumentResolver#supportsParameter(org.springframework.core.MethodParameter)
 	 */
-	@Override
-	public boolean supportsParameter(MethodParameter parameter) {
-		return Hotwire.class.isAssignableFrom(parameter.getParameterType());
-	}
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.method.support.HandlerMethodArgumentResolver#resolveArgument(org.springframework.core.MethodParameter, org.springframework.web.method.support.ModelAndViewContainer, org.springframework.web.context.request.NativeWebRequest, org.springframework.web.bind.support.WebDataBinderFactory)
 	 */
-	@Override
-	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		return new WebMvcHotwire(views, engine, locales);
-	}
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

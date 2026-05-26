@@ -20,7 +20,6 @@ import de.odrotbohm.spring.hotwire.webmvc.WebMvcHotwire;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -36,40 +35,18 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @RequiredArgsConstructor
 class HotwireViewHandlerInterceptor implements HandlerInterceptor {
 
-	private final WebMvcHotwire hotwire;
+    private final WebMvcHotwire hotwire;
 
-	public HotwireViewHandlerInterceptor(ThymeleafViewResolver views, SpringTemplateEngine engine,
-			LocaleResolver locales) {
+    public HotwireViewHandlerInterceptor(ThymeleafViewResolver views, SpringTemplateEngine engine, LocaleResolver locales) {
+        this.hotwire = new WebMvcHotwire(views, engine, locales);
+    }
 
-		this.hotwire = new WebMvcHotwire(views, engine, locales);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
 	 */
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-
-		if (modelAndView == null || !HandlerMethod.class.isInstance(handler)) {
-			return;
-		}
-
-		HandlerMethod method = (HandlerMethod) handler;
-
-		if (!method.getReturnType().getParameterType().equals(TurboStreams.class)) {
-			return;
-		}
-
-		Object attribute = modelAndView.getModel().get("turboStreams");
-
-		if (!TurboStreams.class.isInstance(attribute)) {
-			return;
-		}
-
-		TurboStreams streams = (TurboStreams) attribute;
-
-		modelAndView.setView(hotwire.toView(streams));
-	}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

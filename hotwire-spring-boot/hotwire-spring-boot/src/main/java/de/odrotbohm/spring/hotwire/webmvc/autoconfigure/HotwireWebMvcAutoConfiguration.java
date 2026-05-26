@@ -20,9 +20,7 @@ import de.odrotbohm.spring.hotwire.webmvc.HotwireEvents;
 import de.odrotbohm.spring.hotwire.webmvc.WebMvcHotwire;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
@@ -43,35 +41,40 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @ConditionalOnWebApplication(type = Type.SERVLET)
 class HotwireWebMvcAutoConfiguration implements WebMvcConfigurer {
 
-	private final @NonNull ThymeleafViewResolver resolver;
-	private final @NonNull SpringTemplateEngine engine;
-	private final @NonNull ObjectFactory<LocaleResolver> locales;
+    @NonNull
+    private final ThymeleafViewResolver resolver;
 
-	@Bean
-	Hotwire hotwire() {
-		return new WebMvcHotwire(resolver, engine, locales.getObject());
-	}
+    @NonNull
+    private final SpringTemplateEngine engine;
 
-	@Bean
-	HotwireEvents hotwireEvents(Hotwire hotwire) {
-		return new HotwireEvents(hotwire);
-	}
+    @NonNull
+    private final ObjectFactory<LocaleResolver> locales;
 
-	/*
+    @Bean
+    Hotwire hotwire() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    @Bean
+    HotwireEvents hotwireEvents(Hotwire hotwire) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addArgumentResolvers(java.util.List)
 	 */
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(new HotwireArgumentResolver(resolver, engine, locales.getObject()));
-	}
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry)
 	 */
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new HotwireViewHandlerInterceptor(resolver, engine, locales.getObject()));
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

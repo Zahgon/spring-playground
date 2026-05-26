@@ -17,7 +17,6 @@ package org.modelmapper.spring.data;
 
 import lombok.Setter;
 import lombok.Value;
-
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-
 import org.springframework.util.Assert;
 import org.springframework.web.util.UriTemplate;
 
@@ -37,145 +35,96 @@ import org.springframework.web.util.UriTemplate;
  */
 public class UriTemplateIdentifierProcessor implements AggregateIdentifierProcessor {
 
-	private final Map<Class<?>, ExtractionConfiguration> configuration = new HashMap<>();
+    private final Map<Class<?>, ExtractionConfiguration> configuration = new HashMap<>();
 
-	private @Setter boolean onlyApplyToUri;
+    @Setter
+    private boolean onlyApplyToUri;
 
-	/**
-	 * Registers the given URI template for the given aggregate type. Assumes a single URI template parameter be in place.
-	 *
-	 * @param type must not be {@literal null}.
-	 * @param uriTemplate must not be {@literal null} or empty.
-	 * @return will never be {@literal null}.
-	 */
-	public UriTemplateIdentifierProcessor register(Class<?> type, String uriTemplate) {
+    /**
+     * Registers the given URI template for the given aggregate type. Assumes a single URI template parameter be in place.
+     *
+     * @param type must not be {@literal null}.
+     * @param uriTemplate must not be {@literal null} or empty.
+     * @return will never be {@literal null}.
+     */
+    public UriTemplateIdentifierProcessor register(Class<?> type, String uriTemplate) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		Assert.notNull(type, "Aggreate type must not be null!");
-		Assert.hasText(uriTemplate, "UriTemplate must not be null or empty!");
+    /**
+     * Registers the given URI template for the given aggregate type. Assumes a single URI template parameter be in place.
+     *
+     * @param type must not be {@literal null}.
+     * @param uriTemplate must not be {@literal null}.
+     * @return will never be {@literal null}.
+     */
+    public UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return register(type, new UriTemplate(uriTemplate));
-	}
+    /**
+     * Registers the given {@link UriTemplate} and template variable name for the given aggregate type.
+     *
+     * @param type must not be {@literal null}.
+     * @param template must not be {@literal null}.
+     * @param variableName must not be {@literal null} or empty.
+     * @return will never be {@literal null}.
+     */
+    public UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template, String variableName) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Registers the given URI template for the given aggregate type. Assumes a single URI template parameter be in place.
-	 *
-	 * @param type must not be {@literal null}.
-	 * @param uriTemplate must not be {@literal null}.
-	 * @return will never be {@literal null}.
-	 */
-	public UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template) {
-
-		Assert.notNull(type, "Aggreate type must not be null!");
-		Assert.notNull(template, "UriTemplate must not be null!");
-
-		List<String> variableNames = template.getVariableNames();
-		Assert.isTrue(variableNames.size() == 1, "Template must contain a single template variable.");
-
-		return register(type, template, variableNames.get(0));
-	}
-
-	/**
-	 * Registers the given {@link UriTemplate} and template variable name for the given aggregate type.
-	 *
-	 * @param type must not be {@literal null}.
-	 * @param template must not be {@literal null}.
-	 * @param variableName must not be {@literal null} or empty.
-	 * @return will never be {@literal null}.
-	 */
-	public UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template, String variableName) {
-
-		Assert.notNull(type, "Aggregate type must not be null!");
-		Assert.notNull(template, "UriTemplate must not be null!");
-		Assert.hasText(variableName, "Variable name must not be null or empty!");
-
-		Function<Object, Object> uriCreator = it -> {
-
-			Map<String, Object> parameters = new HashMap<>();
-			parameters.put(variableName, it);
-
-			return template.expand(parameters);
-		};
-
-		return register(type, template, variableName, uriCreator);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.modelmapper.spring.data.IdentifierProcessor#preProcessIdentifier(java.lang.Object, java.lang.Class)
 	 */
-	@Override
-	public Object preProcessIdentifier(Object identifier, Class<?> targetType) {
+    @Override
+    public Object preProcessIdentifier(Object identifier, Class<?> targetType) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		if (onlyApplyToUri && !URI.class.isInstance(identifier)) {
-			return identifier;
-		}
-
-		ExtractionConfiguration configuration = this.configuration.get(targetType);
-
-		if (configuration == null) {
-			return identifier;
-		}
-
-		Map<String, String> variables = configuration.template.match(identifier.toString());
-
-		return variables.get(configuration.variableName);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.modelmapper.spring.data.IdentifierProcessor#postProcessIdentifier(java.lang.Object, java.lang.Class, java.lang.Class)
 	 */
-	@Override
-	public Object postProcessIdentifier(Object identifier, Class<?> sourceType, Class<?> targetType) {
+    @Override
+    public Object postProcessIdentifier(Object identifier, Class<?> sourceType, Class<?> targetType) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		if (onlyApplyToUri && !URI.class.isAssignableFrom(targetType)) {
-			return identifier;
-		}
-
-		ExtractionConfiguration configuration = this.configuration.get(sourceType);
-
-		return configuration == null
-				? identifier
-				: configuration.uriCreator.apply(identifier);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.modelmapper.spring.data.AggregateIdentifierProcessor#getAdditionalIdentifierTypes()
 	 */
-	@Override
-	public Collection<Class<?>> getAdditionalIdentifierTypes() {
-		return Arrays.asList(URI.class);
-	}
+    @Override
+    public Collection<Class<?>> getAdditionalIdentifierTypes() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.plugin.core.Plugin#supports(java.lang.Object)
 	 */
-	public boolean supports(Class<?> delimiter) {
+    public boolean supports(Class<?> delimiter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return configuration.keySet().stream()
-				.anyMatch(delimiter::isAssignableFrom);
-	}
+    @SuppressWarnings("unchecked")
+    private <T> UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template, String variableName, Function<T, Object> uriCreator) {
+        Assert.notNull(type, "Aggregate type must not be null!");
+        Assert.notNull(template, "UriTemplate must not be null!");
+        Assert.hasText(variableName, "Variable name must not be null or empty!");
+        configuration.put(type, ExtractionConfiguration.of(template, variableName, (Function<Object, Object>) uriCreator));
+        return this;
+    }
 
-	@SuppressWarnings("unchecked")
-	private <T> UriTemplateIdentifierProcessor register(Class<?> type, UriTemplate template, String variableName,
-			Function<T, Object> uriCreator) {
+    @Value(staticConstructor = "of")
+    private static class ExtractionConfiguration {
 
-		Assert.notNull(type, "Aggregate type must not be null!");
-		Assert.notNull(template, "UriTemplate must not be null!");
-		Assert.hasText(variableName, "Variable name must not be null or empty!");
+        UriTemplate template;
 
-		configuration.put(type, ExtractionConfiguration.of(template, variableName, (Function<Object, Object>) uriCreator));
+        String variableName;
 
-		return this;
-	}
-
-	@Value(staticConstructor = "of")
-	private static class ExtractionConfiguration {
-
-		UriTemplate template;
-		String variableName;
-		Function<Object, Object> uriCreator;
-	}
+        Function<Object, Object> uriCreator;
+    }
 }

@@ -16,7 +16,6 @@
 package de.odrotbohm.spring.web.mvc;
 
 import java.io.IOException;
-
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpInputMessage;
@@ -34,61 +33,54 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class MessageSourceResolvableHttpMessageConverter
-		extends AbstractHttpMessageConverter<MessageSourceResolvable> {
+public class MessageSourceResolvableHttpMessageConverter extends AbstractHttpMessageConverter<MessageSourceResolvable> {
 
-	private final MessageSourceAccessor messages;
+    private final MessageSourceAccessor messages;
 
-	/**
-	 * Creates a new {@link MessageSourceResolvableHttpMessageConverter} for the given {@link MessageSourceAccessor}.
-	 *
-	 * @param messages must not be {@literal null}.
-	 */
-	MessageSourceResolvableHttpMessageConverter(MessageSourceAccessor messages) {
+    /**
+     * Creates a new {@link MessageSourceResolvableHttpMessageConverter} for the given {@link MessageSourceAccessor}.
+     *
+     * @param messages must not be {@literal null}.
+     */
+    MessageSourceResolvableHttpMessageConverter(MessageSourceAccessor messages) {
+        super(MediaType.TEXT_PLAIN);
+        Assert.notNull(messages, "Messages must not be null!");
+        this.messages = messages;
+    }
 
-		super(MediaType.TEXT_PLAIN);
-
-		Assert.notNull(messages, "Messages must not be null!");
-
-		this.messages = messages;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.http.converter.AbstractHttpMessageConverter#supports(java.lang.Class)
 	 */
-	@Override
-	protected boolean supports(Class<?> clazz) {
-		return MessageSourceResolvable.class.isAssignableFrom(clazz);
-	}
+    @Override
+    protected boolean supports(Class<?> clazz) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.http.converter.AbstractHttpMessageConverter#writeInternal(java.lang.Object, org.springframework.http.HttpOutputMessage)
 	 */
-	@Override
-	protected void writeInternal(MessageSourceResolvable t, HttpOutputMessage outputMessage)
-			throws IOException, HttpMessageNotWritableException {
-		outputMessage.getBody().write(messages.getMessage(t).getBytes());
-	}
+    @Override
+    protected void writeInternal(MessageSourceResolvable t, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.http.converter.AbstractHttpMessageConverter#canRead(org.springframework.http.MediaType)
 	 */
-	@Override
-	protected boolean canRead(MediaType mediaType) {
-		return false;
-	}
+    @Override
+    protected boolean canRead(MediaType mediaType) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.http.converter.AbstractHttpMessageConverter#readInternal(java.lang.Class, org.springframework.http.HttpInputMessage)
 	 */
-	@Override
-	protected MessageSourceResolvable readInternal(Class<? extends MessageSourceResolvable> clazz,
-			HttpInputMessage inputMessage)
-			throws IOException, HttpMessageNotReadableException {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    protected MessageSourceResolvable readInternal(Class<? extends MessageSourceResolvable> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

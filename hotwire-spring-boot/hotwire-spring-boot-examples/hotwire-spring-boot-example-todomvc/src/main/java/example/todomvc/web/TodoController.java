@@ -4,9 +4,7 @@ import example.todomvc.Todo;
 import example.todomvc.web.TemplateModel.TodoForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,49 +28,30 @@ import org.springframework.web.client.HttpClientErrorException;
 @RequiredArgsConstructor
 class TodoController {
 
-	private final TemplateModel template;
+    private final TemplateModel template;
 
-	@GetMapping
-	String index(@RequestParam Optional<String> filter, Model model) {
+    @GetMapping
+    String index(@RequestParam Optional<String> filter, Model model) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.prepareForm(model, filter);
+    @PostMapping
+    String createTodo(@Valid @ModelAttribute("form") TodoForm form) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		return "index";
-	}
+    @PutMapping("/{id}/toggle")
+    String toggleCompletion(@PathVariable("id") Todo todo) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	@PostMapping
-	String createTodo(@Valid @ModelAttribute("form") TodoForm form) {
+    @DeleteMapping("/{todo}")
+    String deleteTodo(@PathVariable Todo todo) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		template.save(form);
-
-		return "redirect:/";
-	}
-
-	@PutMapping("/{id}/toggle")
-	String toggleCompletion(@PathVariable("id") Todo todo) {
-
-		if (todo == null) {
-			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-		}
-
-		template.save(todo.toggleCompletion());
-
-		return "redirect:/";
-	}
-
-	@DeleteMapping("/{todo}")
-	String deleteTodo(@PathVariable Todo todo) {
-
-		template.delete(todo);
-
-		return "redirect:/";
-	}
-
-	@DeleteMapping("/completed")
-	String deleteCompletedTodos(@RequestParam Optional<String> filter) {
-
-		template.deleteCompletedTodos();
-
-		return "redirect:/?filter=" + filter.orElse("");
-	}
+    @DeleteMapping("/completed")
+    String deleteCompletedTodos(@RequestParam Optional<String> filter) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

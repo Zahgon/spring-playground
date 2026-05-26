@@ -16,13 +16,10 @@
 package de.odrotbohm.spring.web.model;
 
 import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 
 /**
@@ -33,38 +30,23 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 @RequiredArgsConstructor(staticName = "of")
 public class ErrorsWithDetails {
 
-	private final Errors errors;
-	private final Map<String, Object> details = new HashMap<>();
+    private final Errors errors;
 
-	/**
-	 * Registers the given details object to be used for the given key, i.e. field name.
-	 *
-	 * @param key must not be {@literal null} or empty.
-	 * @param details can be {@literal null}.
-	 * @return will never be {@literal null}.
-	 */
-	public ErrorsWithDetails addDetails(String key, Object details) {
+    private final Map<String, Object> details = new HashMap<>();
 
-		Assert.hasText(key, "Key must not be null or empty!");
+    /**
+     * Registers the given details object to be used for the given key, i.e. field name.
+     *
+     * @param key must not be {@literal null} or empty.
+     * @param details can be {@literal null}.
+     * @return will never be {@literal null}.
+     */
+    public ErrorsWithDetails addDetails(String key, Object details) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		this.details.put(key, details);
-
-		return this;
-	}
-
-	@JsonAnyGetter
-	public Map<String, Object> toMap() {
-
-		Map<String, Object> fields = new HashMap<>();
-
-		// Add field errors first
-		errors.getFieldErrors().forEach(it -> {
-			fields.put(it.getField(), it);
-		});
-
-		// Add and potentially override errors with custom details
-		details.forEach((key, value) -> fields.put(key, value));
-
-		return fields;
-	}
+    @JsonAnyGetter
+    public Map<String, Object> toMap() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

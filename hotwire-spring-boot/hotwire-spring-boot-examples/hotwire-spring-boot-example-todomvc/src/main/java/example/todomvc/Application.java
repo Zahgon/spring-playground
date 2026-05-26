@@ -26,12 +26,7 @@ import org.springframework.data.map.repository.config.EnableMapRepositories;
 @EnableMapRepositories
 public class Application {
 
-	public static void main(String[] args) throws Exception {
-
-		var context = SpringApplication.run(Application.class, args);
-		var todos = context.getBean(Todos.class);
-
-		todos.save(new Todo("Completed").toggleCompletion());
-		todos.save(new Todo("Incomplete"));
-	}
+    public static void main(String[] args) throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

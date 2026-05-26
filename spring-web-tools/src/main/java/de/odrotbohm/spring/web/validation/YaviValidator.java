@@ -18,9 +18,7 @@ package de.odrotbohm.spring.web.validation;
 import am.ik.yavi.core.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-
 import java.util.function.BiConsumer;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -33,14 +31,15 @@ import org.springframework.validation.Errors;
 @RequiredArgsConstructor
 public class YaviValidator<T> implements BiConsumer<T, Errors> {
 
-	private final @Delegate Validator<T> delegate;
+    @Delegate
+    private final Validator<T> delegate;
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see java.util.function.BiConsumer#accept(java.lang.Object, java.lang.Object)
 	 */
-	@Override
-	public void accept(T t, Errors u) {
-		validate(t).apply(u::rejectValue);
-	}
+    @Override
+    public void accept(T t, Errors u) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

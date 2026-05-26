@@ -18,12 +18,10 @@ package de.odrotbohm.spring.hotwire.webmvc;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-
 import org.springframework.util.Assert;
 
 /**
@@ -34,168 +32,153 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class TurboStreams {
 
-	private final Collection<TurboStream> streams;
+    private final Collection<TurboStream> streams;
 
-	public TurboStreams() {
-		this.streams = new ArrayList<>();
-	}
+    public TurboStreams() {
+        this.streams = new ArrayList<>();
+    }
 
-	/**
-	 * Append the rendered turbo stream template or fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public TurboStreamBuilder append(String target) {
-		return new TurboStreamBuilder(streams, target, Action.APPEND);
-	}
+    /**
+     * Append the rendered turbo stream template or fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public TurboStreamBuilder append(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Append the rendered turbo stream template or fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public TurboStreamBuilder prepend(String target) {
-		return new TurboStreamBuilder(streams, target, Action.PREPEND);
-	}
+    /**
+     * Append the rendered turbo stream template or fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public TurboStreamBuilder prepend(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Remove the rendered turbo stream template or fragment.
-	 *
-	 * @param template must not be {@literal null} or empty.
-	 * @return
-	 */
-	public TurboStreams remove(String target) {
-		return new TurboStreamBuilder(streams, target, Action.REMOVE)
-				.with("¯\\_(ツ)_/¯");
-	}
+    /**
+     * Remove the rendered turbo stream template or fragment.
+     *
+     * @param template must not be {@literal null} or empty.
+     * @return
+     */
+    public TurboStreams remove(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Replace the rendered turbo stream template or fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public TurboStreamBuilder replace(String target) {
-		return new TurboStreamBuilder(streams, target, Action.REPLACE);
-	}
+    /**
+     * Replace the rendered turbo stream template or fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public TurboStreamBuilder replace(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Update the rendered turbo stream template or fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public TurboStreamBuilder update(String target) {
-		return new TurboStreamBuilder(streams, target, Action.UPDATE);
-	}
+    /**
+     * Update the rendered turbo stream template or fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public TurboStreamBuilder update(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	Iterable<TurboStream> toIterable() {
-		return () -> streams.iterator();
-	}
+    Iterable<TurboStream> toIterable() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public enum Action {
+    public enum Action {
 
-		APPEND,
+        APPEND, PREPEND, REPLACE, UPDATE, REMOVE;
 
-		PREPEND,
+        String toAttribute() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 
-		REPLACE,
+    @Value
+    @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+    public static class TurboStreamBuilder {
 
-		UPDATE,
+        private Collection<TurboStream> streams;
 
-		REMOVE;
+        private String target;
 
-		String toAttribute() {
-			return name().toLowerCase(Locale.ENGLISH);
-		}
-	}
+        private Action action;
 
-	@Value
-	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-	public static class TurboStreamBuilder {
+        /**
+         * @param templateOrFragment the identifier of a template or fragment.
+         * @return will never be {@literal null}.
+         */
+        public TurboStreams with(String templateOrFragment) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		private Collection<TurboStream> streams;
-		private String target;
-		private Action action;
+        /**
+         * Renders the fragment with the current target name within the given template.
+         *
+         * @param template must not be {@literal null} or empty.
+         * @return will never be {@literal null}.
+         */
+        public TurboStreams withinTemplate(String template) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		/**
-		 * @param templateOrFragment the identifier of a template or fragment.
-		 * @return will never be {@literal null}.
-		 */
-		public TurboStreams with(String templateOrFragment) {
-			return and(new TurboStream(action, target, templateOrFragment));
-		}
+        /**
+         * Renders the given fragment as Turbo Stream.
+         *
+         * @param fragment must not be {@literal null} or empty and a valid fragment identifier.
+         * @return will never be {@literal null}.
+         */
+        public TurboStreams withFragment(String fragment) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		/**
-		 * Renders the fragment with the current target name within the given template.
-		 *
-		 * @param template must not be {@literal null} or empty.
-		 * @return will never be {@literal null}.
-		 */
-		public TurboStreams withinTemplate(String template) {
+        private TurboStreams and(TurboStream stream) {
+            List<TurboStream> list = new ArrayList<>(streams);
+            list.add(stream);
+            return new TurboStreams(list);
+        }
+    }
 
-			Assert.hasText(template, "Template name must not be null or empty!");
+    @Value
+    static class TurboStream {
 
-			return and(new TurboStream(action, target, template.concat(" :: ".concat(target))));
-		}
+        Action action;
 
-		/**
-		 * Renders the given fragment as Turbo Stream.
-		 *
-		 * @param fragment must not be {@literal null} or empty and a valid fragment identifier.
-		 * @return will never be {@literal null}.
-		 */
-		public TurboStreams withFragment(String fragment) {
+        String target, template;
 
-			Assert.hasText(fragment, "Fragment must not be null or empty!");
-			Assert.isTrue(fragment.contains("::"), () -> "Invalid fragment identifier " + fragment + "!");
+        String openStream() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-			return and(new TurboStream(action, target, fragment));
-		}
+        String closeStream() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		private TurboStreams and(TurboStream stream) {
+        String openTemplate() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-			List<TurboStream> list = new ArrayList<>(streams);
-			list.add(stream);
+        String openTemplateFormatted() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-			return new TurboStreams(list);
-		}
-	}
+        String closeTemplate() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-	@Value
-	static class TurboStream {
+        String closeTemplateFormatted() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		Action action;
-		String target, template;
-
-		String openStream() {
-			return String.format("<turbo-stream action=\"%s\" target=\"%s\">", action.toAttribute(), target);
-		}
-
-		String closeStream() {
-			return "</turbo-stream>\n";
-		}
-
-		String openTemplate() {
-			return "<template>";
-		}
-
-		String openTemplateFormatted() {
-			return String.format("\n\t%s\n\t\t", openTemplate());
-		}
-
-		String closeTemplate() {
-			return "</template>";
-		}
-
-		String closeTemplateFormatted() {
-			return String.format("\n\t%s\n", closeTemplate());
-		}
-
-		boolean isRemove() {
-			return Action.REMOVE.equals(action);
-		}
-	}
+        boolean isRemove() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 }

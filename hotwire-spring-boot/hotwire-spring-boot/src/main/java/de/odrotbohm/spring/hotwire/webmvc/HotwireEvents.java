@@ -16,12 +16,10 @@
 package de.odrotbohm.spring.hotwire.webmvc;
 
 import lombok.RequiredArgsConstructor;
-
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.lang.Nullable;
@@ -38,51 +36,46 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class HotwireEvents {
 
-	private static final String DEFAULT_STREAM_NAME = "¯\\_(ツ)_/¯";
+    private static final String DEFAULT_STREAM_NAME = "¯\\_(ツ)_/¯";
 
-	private final Map<String, SseEmitter> streams = new ConcurrentHashMap<>();
-	private final Hotwire delegate;
+    private final Map<String, SseEmitter> streams = new ConcurrentHashMap<>();
 
-	public SseEmitter initStream() {
-		return initStream(DEFAULT_STREAM_NAME);
-	}
+    private final Hotwire delegate;
 
-	public SseEmitter initStream(String name) {
-		return initStreamInternal(name, null);
-	}
+    public SseEmitter initStream() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public SseEmitter initStream(String name, Duration duration) {
-		return initStreamInternal(name, duration);
-	}
+    public SseEmitter initStream(String name) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public void push(TurboStreams streams, Map<String, Object> model) throws IOException {
-		push(streams, model, DEFAULT_STREAM_NAME);
-	}
+    public SseEmitter initStream(String name, Duration duration) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public void push(TurboStreams streams, Map<String, Object> model, String stream) throws IOException {
-		push(stream, delegate.toSsePayload(streams, model));
-	}
+    public void push(TurboStreams streams, Map<String, Object> model) throws IOException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	private SseEmitter initStreamInternal(String name, @Nullable Duration duration) {
+    public void push(TurboStreams streams, Map<String, Object> model, String stream) throws IOException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-		SseEmitter emitter = duration == null ? new SseEmitter() : new SseEmitter(duration.toMillis());
-		emitter.onCompletion(() -> streams.remove(name));
-		emitter.onError(it -> streams.remove(name));
-		emitter.onTimeout(() -> streams.remove(name));
+    private SseEmitter initStreamInternal(String name, @Nullable Duration duration) {
+        SseEmitter emitter = duration == null ? new SseEmitter() : new SseEmitter(duration.toMillis());
+        emitter.onCompletion(() -> streams.remove(name));
+        emitter.onError(it -> streams.remove(name));
+        emitter.onTimeout(() -> streams.remove(name));
+        streams.put(name, emitter);
+        return emitter;
+    }
 
-		streams.put(name, emitter);
-
-		return emitter;
-	}
-
-	private void push(String stream, Object payload) throws IOException {
-
-		SseEmitter emitter = streams.get(stream);
-
-		if (emitter == null) {
-			return;
-		}
-
-		emitter.send(payload);
-	}
+    private void push(String stream, Object payload) throws IOException {
+        SseEmitter emitter = streams.get(stream);
+        if (emitter == null) {
+            return;
+        }
+        emitter.send(payload);
+    }
 }

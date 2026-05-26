@@ -18,11 +18,9 @@ package de.odrotbohm.spring.htmx.webmvc;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.util.Assert;
 
 /**
@@ -33,163 +31,141 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class HtmxPartials {
 
-	private final Collection<Partial> streams;
+    private final Collection<Partial> streams;
 
-	public HtmxPartials() {
-		this.streams = new ArrayList<>();
-	}
+    public HtmxPartials() {
+        this.streams = new ArrayList<>();
+    }
 
-	/**
-	 * Append the rendered fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public HtmxPartialsBuilder append(String target) {
-		return new HtmxPartialsBuilder(streams, target, Action.APPEND);
-	}
+    /**
+     * Append the rendered fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public HtmxPartialsBuilder append(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Prepend the rendered fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public HtmxPartialsBuilder prepend(String target) {
-		return new HtmxPartialsBuilder(streams, target, Action.PREPEND);
-	}
+    /**
+     * Prepend the rendered fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public HtmxPartialsBuilder prepend(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Remove the rendered fragment.
-	 *
-	 * @param template must not be {@literal null} or empty.
-	 * @return
-	 */
-	public HtmxPartials remove(String target) {
-		return new HtmxPartialsBuilder(streams, target, Action.REMOVE)
-				.with("¯\\_(ツ)_/¯");
-	}
+    /**
+     * Remove the rendered fragment.
+     *
+     * @param template must not be {@literal null} or empty.
+     * @return
+     */
+    public HtmxPartials remove(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Replace the rendered fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public HtmxPartialsBuilder replace(String target) {
-		return new HtmxPartialsBuilder(streams, target, Action.REPLACE);
-	}
+    /**
+     * Replace the rendered fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public HtmxPartialsBuilder replace(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	/**
-	 * Update the rendered fragment.
-	 *
-	 * @param target must not be {@literal null} or empty.
-	 * @return
-	 */
-	public HtmxPartialsBuilder update(String target) {
-		return new HtmxPartialsBuilder(streams, target, Action.UPDATE);
-	}
+    /**
+     * Update the rendered fragment.
+     *
+     * @param target must not be {@literal null} or empty.
+     * @return
+     */
+    public HtmxPartialsBuilder update(String target) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	Iterable<Partial> toIterable() {
-		return () -> streams.iterator();
-	}
+    Iterable<Partial> toIterable() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	public enum Action {
+    public enum Action {
 
-		APPEND,
+        APPEND, PREPEND, REPLACE, UPDATE, REMOVE;
 
-		PREPEND,
+        String toAttribute() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 
-		REPLACE,
+    @Value
+    @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+    public static class HtmxPartialsBuilder {
 
-		UPDATE,
+        private Collection<Partial> streams;
 
-		REMOVE;
+        private String target;
 
-		String toAttribute() {
+        private Action action;
 
-			switch (this) {
-				case APPEND:
-					return "beforeend";
-				default:
-					return "true";
-			}
-		}
-	}
+        /**
+         * @param templateOrFragment the identifier of a template or fragment.
+         * @return will never be {@literal null}.
+         */
+        public HtmxPartials with(String templateOrFragment) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-	@Value
-	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-	public static class HtmxPartialsBuilder {
+        /**
+         * Renders the fragment with the current target name within the given template.
+         *
+         * @param template must not be {@literal null} or empty.
+         * @return will never be {@literal null}.
+         */
+        public HtmxPartials withinTemplate(String template) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		private Collection<Partial> streams;
-		private String target;
-		private Action action;
+        /**
+         * Renders the given fragment as Turbo Stream.
+         *
+         * @param fragment must not be {@literal null} or empty and a valid fragment identifier.
+         * @return will never be {@literal null}.
+         */
+        public HtmxPartials withFragment(String fragment) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		/**
-		 * @param templateOrFragment the identifier of a template or fragment.
-		 * @return will never be {@literal null}.
-		 */
-		public HtmxPartials with(String templateOrFragment) {
-			return and(new Partial(action, target, templateOrFragment));
-		}
+        private HtmxPartials and(Partial stream) {
+            List<Partial> list = new ArrayList<>(streams);
+            list.add(stream);
+            return new HtmxPartials(list);
+        }
+    }
 
-		/**
-		 * Renders the fragment with the current target name within the given template.
-		 *
-		 * @param template must not be {@literal null} or empty.
-		 * @return will never be {@literal null}.
-		 */
-		public HtmxPartials withinTemplate(String template) {
+    @Value
+    static class Partial {
 
-			Assert.hasText(template, "Template name must not be null or empty!");
+        Action action;
 
-			return and(new Partial(action, target, template.concat(" :: ".concat(target))));
-		}
+        String target, template;
 
-		/**
-		 * Renders the given fragment as Turbo Stream.
-		 *
-		 * @param fragment must not be {@literal null} or empty and a valid fragment identifier.
-		 * @return will never be {@literal null}.
-		 */
-		public HtmxPartials withFragment(String fragment) {
+        String openWrapper() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-			Assert.hasText(fragment, "Fragment must not be null or empty!");
-			Assert.isTrue(fragment.contains("::"), () -> "Invalid fragment identifier " + fragment + "!");
+        String closeWrapper() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-			return and(new Partial(action, target, fragment));
-		}
+        boolean isRemove() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
 
-		private HtmxPartials and(Partial stream) {
-
-			List<Partial> list = new ArrayList<>(streams);
-			list.add(stream);
-
-			return new HtmxPartials(list);
-		}
-	}
-
-	@Value
-	static class Partial {
-
-		Action action;
-		String target, template;
-
-		String openWrapper() {
-			return String.format("<div id=\"%s\" hx-swap-oob=\"%s\">\n", target,
-					action.toAttribute());
-		}
-
-		String closeWrapper() {
-			return "\n</div>\n";
-		}
-
-		boolean isRemove() {
-			return Action.REMOVE.equals(action);
-		}
-
-		boolean isReplace() {
-			return Action.REPLACE.equals(action);
-		}
-	}
+        boolean isReplace() {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+    }
 }

@@ -18,11 +18,9 @@ package example;
 import de.odrotbohm.spring.hotwire.webmvc.HotwireEvents;
 import de.odrotbohm.spring.hotwire.webmvc.TurboStreams;
 import lombok.RequiredArgsConstructor;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -38,22 +36,15 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RequiredArgsConstructor
 class TurboStreamsSseController {
 
-	private final HotwireEvents events;
+    private final HotwireEvents events;
 
-	@GetMapping(path = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	SseEmitter indexSse() {
-		return events.initStream();
-	}
+    @GetMapping(path = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    SseEmitter indexSse() {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
-	@Scheduled(fixedRate = 2000)
-	void pushEvent() throws IOException {
-
-		Map<String, Object> model = new HashMap<>();
-		model.put("time", System.currentTimeMillis());
-
-		TurboStreams streams = new TurboStreams()
-				.replace("load").with("index :: load");
-
-		events.push(streams, model);
-	}
+    @Scheduled(fixedRate = 2000)
+    void pushEvent() throws IOException {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

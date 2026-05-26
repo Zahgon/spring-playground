@@ -20,7 +20,6 @@ import de.odrotbohm.spring.htmx.webmvc.WebMvcHtmx;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -36,40 +35,18 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @RequiredArgsConstructor
 class HtmxViewHandlerInterceptor implements HandlerInterceptor {
 
-	private final WebMvcHtmx htmx;
+    private final WebMvcHtmx htmx;
 
-	public HtmxViewHandlerInterceptor(ThymeleafViewResolver views, SpringTemplateEngine engine,
-			LocaleResolver locales) {
+    public HtmxViewHandlerInterceptor(ThymeleafViewResolver views, SpringTemplateEngine engine, LocaleResolver locales) {
+        this.htmx = new WebMvcHtmx(views, engine, locales);
+    }
 
-		this.htmx = new WebMvcHtmx(views, engine, locales);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
 	 */
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-
-		if (modelAndView == null || !HandlerMethod.class.isInstance(handler)) {
-			return;
-		}
-
-		HandlerMethod method = (HandlerMethod) handler;
-
-		if (!method.getReturnType().getParameterType().equals(HtmxPartials.class)) {
-			return;
-		}
-
-		Object attribute = modelAndView.getModel().get("htmxPartials");
-
-		if (!HtmxPartials.class.isInstance(attribute)) {
-			return;
-		}
-
-		HtmxPartials streams = (HtmxPartials) attribute;
-
-		modelAndView.setView(htmx.toView(streams));
-	}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }
